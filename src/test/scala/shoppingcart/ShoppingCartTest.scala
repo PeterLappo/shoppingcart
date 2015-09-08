@@ -22,8 +22,7 @@ class ShoppingCartTest {
     val scanner = new ItemScanner
     // 60*3
     val items = scanner.scanItems("Apple", "Apple", "Apple", "Apple", "Apple")
-    val shoppingCart = new ShoppingCart
-    shoppingCart.addOffer(BuyOneGetOneFree("Apple"))
+    val shoppingCart = new ShoppingCart(Set(BuyOneGetOneFree("Apple")))
     shoppingCart.addItems(items)
     assertEquals(180, shoppingCart.totalInPence)
     assertEquals("1.80", shoppingCart.totalInPounds)
@@ -34,8 +33,7 @@ class ShoppingCartTest {
     val scanner = new ItemScanner
     // 60*2
     val items = scanner.scanItems("Apple", "Apple", "Apple", "Apple")
-    val shoppingCart = new ShoppingCart
-    shoppingCart.addOffer(BuyOneGetOneFree("Apple"))
+    val shoppingCart = new ShoppingCart(Set(BuyOneGetOneFree("Apple")))
     shoppingCart.addItems(items)
     assertEquals(120, shoppingCart.totalInPence)
     assertEquals("1.20", shoppingCart.totalInPounds)
@@ -46,8 +44,7 @@ class ShoppingCartTest {
     val scanner = new ItemScanner
     // 25 * 4
     val items = scanner.scanItems("Orange", "Orange", "Orange", "Orange", "Orange", "Orange")
-    val shoppingCart = new ShoppingCart
-    shoppingCart.addOffer(ThreeForPriceOfTwo("Orange"))
+    val shoppingCart = new ShoppingCart(Set(ThreeForPriceOfTwo("Orange")))
     shoppingCart.addItems(items)
     assertEquals(100, shoppingCart.totalInPence)
     assertEquals("1.00", shoppingCart.totalInPounds)
@@ -58,8 +55,7 @@ class ShoppingCartTest {
     val scanner = new ItemScanner
     // 25 * 5
     val items = scanner.scanItems("Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange")
-    val shoppingCart = new ShoppingCart
-    shoppingCart.addOffer(ThreeForPriceOfTwo("Orange"))
+    val shoppingCart = new ShoppingCart(Set(ThreeForPriceOfTwo("Orange")))
     shoppingCart.addItems(items)
     assertEquals(125, shoppingCart.totalInPence)
     assertEquals("1.25", shoppingCart.totalInPounds)
@@ -70,8 +66,7 @@ class ShoppingCartTest {
     val scanner = new ItemScanner
     // 25 * 6
     val items = scanner.scanItems("Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange", "Orange")
-    val shoppingCart = new ShoppingCart
-    shoppingCart.addOffer(ThreeForPriceOfTwo("Orange"))
+    val shoppingCart = new ShoppingCart(Set(ThreeForPriceOfTwo("Orange")))
     shoppingCart.addItems(items)
     assertEquals(150, shoppingCart.totalInPence)
     assertEquals("1.50", shoppingCart.totalInPounds)
@@ -79,15 +74,13 @@ class ShoppingCartTest {
 
   @Test
   def scanItemsTotalWithOffers: Unit = {
-    val scanner = new ItemScanner
+    val scanner = new ItemScanner 
     // 60 * 2 + 25 * 2
-    val items = scanner.scanItems("Apple", "Apple", "Apple", "Orange", "Orange", "Orange")
-    val shoppingCart = new ShoppingCart
-    shoppingCart.addOffer(BuyOneGetOneFree("Apple"))
-    shoppingCart.addOffer(ThreeForPriceOfTwo("Orange"))
+    val items = scanner.scanItems("Apple", "Apple", "Apple", "Orange", "Orange", "Orange", "Banana")
+    val shoppingCart = new ShoppingCart(Offers.todaysOffers)
     shoppingCart.addItems(items)
-    assertEquals(170, shoppingCart.totalInPence)
-    assertEquals("1.70", shoppingCart.totalInPounds)
+    assertEquals(220, shoppingCart.totalInPence)
+    assertEquals("2.20", shoppingCart.totalInPounds)
   }
 
 }
